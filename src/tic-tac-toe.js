@@ -1,7 +1,7 @@
 const WINNER_COMBINATIONS = [[[0, 0], [0, 1], [0, 2]],
                              [[1, 0], [1, 1], [1, 2]],
                              [[2, 0], [2, 1], [2, 2]],
-                             [[0, 0], [0, 1], [2, 0]],
+                             [[0, 0], [1, 0], [2, 0]],
                              [[0, 1], [1, 1], [2, 1]],
                              [[0, 2], [1, 2], [2, 2]],
                              [[0, 0], [1, 1], [2, 2]],
@@ -60,26 +60,35 @@ class TicTacToe {
     }
 
     getWinner() {
-        scoreWinner(this.PlayerO);
-
-        scoreWinner(this.PlayerX);
+        let winner = null;
+        winner = scoreWinner(this.PlayerO);
+        if (winner != null) {
+            return winner;
+        }
+        winner = scoreWinner(this.PlayerX);
+        return winner;
 
 
         function scoreWinner (player) {
             let haveWinner = false;
             if (player.moves.length >= 3) {
-                this.WINNER_COMBINATIONS.forEach((winnerArray) => {
-                    winnerArray.forEach((winnerItem) => {
-                        player.moves.forEach((playerItem) => {
+                haveWinner = WINNER_COMBINATIONS.some((winnerArray) => {
+                    return winnerArray.every((winnerItem) => {
+                        return player.moves.some((playerItem) => {
                                 if ((winnerItem[0] == playerItem[0]) && (winnerItem[1] == playerItem[1])) {
-                                    haveWinner = true;
+                                    return true;
                                 }
+                        });
                     });
                 });
-            });
+            }
+            if (haveWinner) {
+                return player.symbol;
+            } else {
+                return null;
+            }
         }
     }
-}
 
     noMoreTurns() {
 
@@ -113,12 +122,11 @@ module.exports = TicTacToe;
 
 let game;
 
-
 game = new TicTacToe();
-game.nextTurn(1, 0)
+game.nextTurn(2, 1)
 game.getWinner();
 
-game.nextTurn(1, 2)
+game.nextTurn(2, 0)
 game.getWinner();
 
 game.nextTurn(2, 1)
@@ -127,31 +135,18 @@ game.getWinner();
 game.nextTurn(1, 2)
 game.getWinner();
 
+game.nextTurn(0, 0)
+game.getWinner();
+
+game.nextTurn(2, 1)
+game.getWinner();
+
 game.nextTurn(1, 1)
 game.getWinner();
 
-game.nextTurn(0, 1)
+game.nextTurn(1, 1)
+game.getWinner();
+
+game.nextTurn(1, 0)
 debugger;
 game.getWinner();
-
-game.nextTurn(2, 0)
-game.getWinner();
-
-game.nextTurn(0, 1)
-game.getWinner();
-
-game.nextTurn(2, 2)
-game.getWinner();
-
-game.nextTurn(0, 1)
-game.getWinner();
-
-game.nextTurn(1, 1)
-game.getWinner();
-
-game.nextTurn(2, 0)
-game.getWinner();
-
-game.nextTurn(0, 2)
-game.getWinner();
-

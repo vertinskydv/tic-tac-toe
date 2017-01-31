@@ -60,38 +60,26 @@ class TicTacToe {
     }
 
     getWinner() {
-        this.winner = null;
-        this.winner = scoreWinner(this.PlayerO);
-        this.winner = scoreWinner(this.PlayerX);
-        return this.winner;
+        scoreWinner(this.PlayerO);
+
+        scoreWinner(this.PlayerX);
+
 
         function scoreWinner (player) {
+            let haveWinner = false;
             if (player.moves.length >= 3) {
-                WINNER_COMBINATIONS.forEach((winnerArray) => {
-                    let haveWinner = false;
-                    haveWinner = winnerArray.every((winnerItem) => {
-                        return player.moves.some((playerItem) => {
-                            if (winnerItem == playerItem) {
-                                return true
-                            } else {
-                                return false
-                            }
-                        });
-
+                this.WINNER_COMBINATIONS.forEach((winnerArray) => {
+                    winnerArray.forEach((winnerItem) => {
+                        player.moves.forEach((playerItem) => {
+                                if ((winnerItem[0] == playerItem[0]) && (winnerItem[1] == playerItem[1])) {
+                                    haveWinner = true;
+                                }
                     });
-                    if (haveWinner) {
-                        return player.symbol;
-                    } else {
-                        return null;
-                    }
                 });
-            } else {
-                return null;
-            }
-
+            });
         }
-
     }
+}
 
     noMoreTurns() {
 

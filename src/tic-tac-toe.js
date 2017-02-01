@@ -21,6 +21,8 @@ class TicTacToe {
         };
         this.pervMoveCorrect = true;
         this.currentPlayer = this.PlayerX;
+        this.winner = null;
+        this.winningPlayer = null;
     }
 
     getCurrentPlayerSymbol() {
@@ -50,23 +52,26 @@ class TicTacToe {
         }
 
         this.changePlayer();
+        this.getWinner();
+
     }
 
     isFinished() {
-        if (this.PlayerO.moves.length + this.PlayerX.moves.length == 9) {
+        if (this.winner) {
             return true;
-        }
+        };
+        return false;
 
     }
 
     getWinner() {
-        let winner = null;
-        winner = scoreWinner(this.PlayerO);
-        if (winner != null) {
-            return winner;
+        this.winner = null;
+        this.winner = scoreWinner(this.PlayerO);
+        if (this.winner != null) {
+            return this.winner;
         }
-        winner = scoreWinner(this.PlayerX);
-        return winner;
+        this.winner = scoreWinner(this.PlayerX);
+        return this.winner;
 
 
         function scoreWinner (player) {
@@ -91,10 +96,19 @@ class TicTacToe {
     }
 
     noMoreTurns() {
+        if (this.PlayerX.moves.length + this.PlayerO.moves.length == 9) {
+            return true;
+        };
+        return false;
 
     }
 
     isDraw() {
+        if ((this.PlayerO.moves.length + this.PlayerX.moves.length == 9) && (this.winner == null)) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 
@@ -121,32 +135,7 @@ class TicTacToe {
 module.exports = TicTacToe;
 
 let game;
-
 game = new TicTacToe();
-game.nextTurn(2, 1)
-game.getWinner();
-
-game.nextTurn(2, 0)
-game.getWinner();
-
-game.nextTurn(2, 1)
-game.getWinner();
-
-game.nextTurn(1, 2)
-game.getWinner();
-
-game.nextTurn(0, 0)
-game.getWinner();
-
-game.nextTurn(2, 1)
-game.getWinner();
-
-game.nextTurn(1, 1)
-game.getWinner();
-
-game.nextTurn(1, 1)
-game.getWinner();
-
-game.nextTurn(1, 0)
+game.nextTurn(0, 2)
 debugger;
-game.getWinner();
+game.isFinished();

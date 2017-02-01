@@ -51,13 +51,13 @@ class TicTacToe {
             this.pervMoveCorrect = false;
         }
 
-        this.changePlayer();
-        this.getWinner();
 
+        this.getWinner();
+        this.changePlayer();
     }
 
     isFinished() {
-        if (this.winner) {
+        if ((this.PlayerO.moves.length + this.PlayerX.moves.length == 9) || (this.winner)) {
             return true;
         };
         return false;
@@ -133,9 +133,3 @@ class TicTacToe {
 }
 
 module.exports = TicTacToe;
-
-let game;
-game = new TicTacToe();
-game.nextTurn(0, 2)
-debugger;
-game.isFinished();
